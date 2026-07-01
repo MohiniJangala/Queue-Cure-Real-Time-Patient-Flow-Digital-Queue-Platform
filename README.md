@@ -147,35 +147,73 @@ Queue Cure
 ```
 
 ---
+.
 
-## 🔄 Patient Workflow
+## 🔄 Socket.IO Event Flow
+                    Receptionist Dashboard
+                           │
+                           │
+      Add Patient / Call Next / Complete Consultation
+                           │
+                           ▼
+                    Express.js REST API
+                           │
+                           ▼
+                      MongoDB Atlas
+                           │
+                           ▼
+                 Socket.IO Server (Emit)
+                           │
+      queueUpdated / dashboardUpdated / patientAdded
+        ┌─────────────────┼─────────────────┐
+        │                 │                 │
+        ▼                 ▼                 ▼
+ Patient Dashboard   Doctor Dashboard  Receptionist Dashboard
+        │                 │                 │
+        ▼                 ▼                 ▼
+ Live Queue         Current Patient     Dashboard Refresh
+ Status             Consultation        Statistics Update
+ Estimated Wait     Appointment View    Queue Refresh
 
-```
-Book Appointment
-        │
-        ▼
-Receptionist Registration
-        │
-        ▼
-Auto Token Generation
-        │
-        ▼
+## 📡 Real-Time Events
+
+| Event | Description |
+| `queueUpdated` | Broadcasts queue changes to all connected dashboards in real time. |
+| `patientAdded` | Updates dashboards immediately after a new patient is registered. |
+| `consultationCompleted` | Refreshes patient queue and doctor dashboard after consultation completion. |
+| `appointmentBooked` | Notifies dashboards when a new appointment is successfully booked. |
+| `dashboardUpdated` | Synchronizes analytics cards and queue statistics across all clients. |
+
+## 🏥 Application Workflow
+Patient Books Appointment
+          │
+          ▼
+Receptionist Registers Patient
+          │
+          ▼
+Automatic Token Generation
+          │
+          ▼
 QR Code + WhatsApp/SMS Notification
-        │
-        ▼
-Live Queue Tracking
-        │
-        ▼
-Doctor Consultation
-        │
-        ▼
-Completed / Missed / Cancelled
-        │
-        ▼
+          │
+          ▼
+Patient Tracks Live Queue
+          │
+          ▼
+Doctor Calls Next Patient
+          │
+          ▼
+Consultation
+          │
+          ├────────► Completed
+          │
+          ├────────► Missed ───► Rejoin Queue
+          │
+          └────────► Cancelled
+          │
+          ▼
 Patient Feedback
-```
 
----
 
 ## 🎯 Problem Statement
 
