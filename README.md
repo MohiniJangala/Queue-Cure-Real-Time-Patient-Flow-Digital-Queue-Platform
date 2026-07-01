@@ -186,6 +186,7 @@ Queue Cure
 
 ## 🏥 Application Workflow
 
+```text
 Patient Books Appointment
           │
           ▼
@@ -214,6 +215,9 @@ Consultation
           │
           ▼
 Patient Feedback
+```
+
+
 
 
 ## 🎯 Problem Statement
