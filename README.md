@@ -185,6 +185,7 @@ Queue Cure
 | `dashboardUpdated` | Synchronizes analytics cards and queue statistics across all clients. |
 
 ## 🏥 Application Workflow
+
 Patient Books Appointment
           │
           ▼
