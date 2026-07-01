@@ -7,6 +7,7 @@ const {
   getPatients,
   updatePatientStatus,
   updatePatientName,
+  rejoinQueue,
 } = require("../controllers/patientController");
 
 const {
@@ -14,21 +15,28 @@ const {
 } = require("../controllers/patientStatusController");
 
 // Add Patient
-router.post("/", addPatient);
 
+router.post("/", addPatient);
 // Get All Patients
 router.get("/", getPatients);
-
 // Get Patient Status
 router.get(
   "/status/:token",
   getPatientStatus
 );
 
-// Edit Patient Name
+// Edit Patient
+
 router.put(
   "/edit/:id",
   updatePatientName
+);
+
+// Rejoin Queue
+
+router.put(
+  "/rejoin/:id",
+  rejoinQueue
 );
 
 // Update Patient Status

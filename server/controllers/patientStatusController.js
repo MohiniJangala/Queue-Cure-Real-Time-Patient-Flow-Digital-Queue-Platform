@@ -3,6 +3,7 @@ const Settings = require("../models/Settings");
 
 const getPatientStatus = async (req, res) => {
   try {
+
     const { token } = req.params;
 
     const patient = await Patient.findOne({
@@ -15,20 +16,16 @@ const getPatientStatus = async (req, res) => {
       });
     }
 
-    const settings =
-      await Settings.findOne();
+    const settings = await Settings.findOne();
 
-    const currentToken =
-      settings.currentToken;
+    const currentToken = settings.currentToken;
 
-    const avgTime =
-      settings.avgConsultationTime;
+    const avgTime = settings.avgConsultationTime;
 
-    const patientsAhead =
-      Math.max(
-        patient.token - currentToken - 1,
-        0
-      );
+    const patientsAhead = Math.max(
+      patient.token - currentToken - 1,
+      0
+    );
 
     const estimatedWait =
       patientsAhead * avgTime;
@@ -39,12 +36,18 @@ const getPatientStatus = async (req, res) => {
       currentToken,
       patientsAhead,
       estimatedWait,
+
+      // ✅ NEW
+      status: patient.status,
+
     });
 
   } catch (error) {
+
     res.status(500).json({
       message: error.message,
     });
+
   }
 };
 

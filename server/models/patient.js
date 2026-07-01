@@ -7,6 +7,12 @@ const patientSchema = new mongoose.Schema(
       required: true,
     },
 
+    // Patient Phone Number
+    phone: {
+      type: String,
+      required: true,
+    },
+
     token: {
       type: Number,
       required: true,
@@ -19,6 +25,7 @@ const patientSchema = new mongoose.Schema(
         "waiting",
         "in_consultation",
         "completed",
+        "missed",
         "cancelled",
       ],
       default: "waiting",
